@@ -79,7 +79,7 @@ const AnalysisHistory = () => {
         </button>
       </div>
 
-      <div className="grid grid-cols-1" style={{ gap: '1rem' }}>
+      <div className="grid grid-cols-1" style={{ gap: '1.5rem' }}>
         {analyses.map((analysis) => (
           <div key={analysis.id} className="card">
             <div style={{ 
@@ -90,8 +90,8 @@ const AnalysisHistory = () => {
               flexWrap: 'wrap',
               gap: '1rem'
             }}>
-              <div>
-                <h3 style={{ fontWeight: '600', marginBottom: '0.5rem' }}>
+              <div style={{ flex: 1 }}>
+                <h3 style={{ fontWeight: '600', marginBottom: '0.5rem', fontSize: '1.125rem' }}>
                   {analysis.title}
                 </h3>
                 <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', marginBottom: '0.5rem' }}>
@@ -115,7 +115,28 @@ const AnalysisHistory = () => {
                   }}>
                     {analysis.operation_type}
                   </span>
+                  {analysis.financial_analysis?.saudeFinanceira && (
+                    <span style={{ 
+                      padding: '0.25rem 0.5rem', 
+                      backgroundColor: analysis.financial_analysis.saudeFinanceira === 'ótima' ? '#dcfce7' : 
+                                      analysis.financial_analysis.saudeFinanceira === 'boa' ? '#dbeafe' : 
+                                      analysis.financial_analysis.saudeFinanceira === 'regular' ? '#fef3c7' : '#fee2e2',
+                      color: analysis.financial_analysis.saudeFinanceira === 'ótima' ? '#166534' : 
+                             analysis.financial_analysis.saudeFinanceira === 'boa' ? '#1e40af' : 
+                             analysis.financial_analysis.saudeFinanceira === 'regular' ? '#92400e' : '#991b1b',
+                      borderRadius: '0.25rem',
+                      fontSize: '0.75rem',
+                      fontWeight: '500'
+                    }}>
+                      Saúde: {analysis.financial_analysis.saudeFinanceira}
+                    </span>
+                  )}
                 </div>
+                {analysis.financial_analysis?.margemLucro && (
+                  <div style={{ fontSize: '0.875rem', color: '#64748b', marginBottom: '0.25rem' }}>
+                    Margem: {analysis.financial_analysis.margemLucro}
+                  </div>
+                )}
               </div>
               
               <div style={{ textAlign: 'right' }}>
@@ -134,12 +155,12 @@ const AnalysisHistory = () => {
                   Impostos
                 </h4>
                 <div style={{ fontSize: '0.75rem' }}>
-                  <div>Simples: R$ {analysis.taxes?.simplesNacional?.toFixed(2)}</div>
-                  <div>IRPJ: R$ {analysis.taxes?.irpj?.toFixed(2)}</div>
-                  <div>CSLL: R$ {analysis.taxes?.csll?.toFixed(2)}</div>
-                  <div style={{ fontWeight: '600' }}>
-                    Total: R$ {analysis.taxes?.total?.toFixed(2)}
-                  </div>
+                  <div>Simples: R$ {analysis.taxes?.simplesNacional?.valor?.toFixed(2)}</div>
+                  {analysis.taxes?.melhorRegime && (
+                    <div style={{ fontWeight: '600', color: '#059669', marginTop: '0.25rem' }}>
+                      Recomendado: {analysis.taxes.melhorRegime}
+                    </div>
+                  )}
                 </div>
               </div>
               
@@ -151,7 +172,7 @@ const AnalysisHistory = () => {
                   <ul style={{ fontSize: '0.75rem', paddingLeft: '1rem' }}>
                     {analysis.insights.slice(0, 2).map((insight, index) => (
                       <li key={index} style={{ marginBottom: '0.25rem' }}>
-                        {insight.length > 100 ? insight.substring(0, 100) + '...' : insight}
+                        {insight.length > 80 ? insight.substring(0, 80) + '...' : insight}
                       </li>
                     ))}
                   </ul>
@@ -164,9 +185,45 @@ const AnalysisHistory = () => {
                 padding: '0.75rem', 
                 backgroundColor: '#f8fafc', 
                 borderRadius: '0.25rem',
-                fontSize: '0.75rem'
+                fontSize: '0.75rem',
+                borderLeft: '3px solid #3b82f6'
               }}>
-                <strong>Resumo:</strong> {analysis.monthly_summary}
+                <strong>Resumo:</strong> {analysis.monthly_summary.length > 120 
+                  ? analysis.monthly_summary.substring(0, 120) + '...' 
+                  : analysis.monthly_summary}
+              </div>
+            )}
+
+            {analysis.strategicInsights && analysis.strategicInsights.length > 0 && (
+              <div style={{ marginTop: '1rem' }}>
+                <div style={{ 
+                  display: 'flex', 
+                  gap: '0.25rem', 
+                  flexWrap: 'wrap',
+                  fontSize: '0.7rem'
+                }}>
+                  {analysis.strategicInsights.slice(0, 3).map((insight, index) => (
+                    <span key={index} style={{ 
+                      padding: '0.125rem 0.375rem', 
+                      backgroundColor: '#fffbeb', 
+                      color: '#92400e',
+                      borderRadius: '0.125rem',
+                    }}>
+                      💡
+                    </span>
+                  ))}
+                  {analysis.strategicInsights.length > 3 && (
+                    <span style={{ 
+                      padding: '0.125rem 0.375rem', 
+                      backgroundColor: '#f3f4f6', 
+                      color: '#6b7280',
+                      borderRadius: '0.125rem',
+                      fontSize: '0.625rem'
+                    }}>
+                      +{analysis.strategicInsights.length - 3}
+                    </span>
+                  )}
+                </div>
               </div>
             )}
           </div>

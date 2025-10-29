@@ -128,3 +128,31 @@ body {
     grid-template-columns: repeat(3, 1fr);
   }
 }
+
+/* Adicione estas classes ao final do arquivo existente */
+
+/* Novas cores para os diferentes estados */
+.bg-strategic { background-color: #f0f9ff; }
+.bg-alert { background-color: #fef2f2; }
+.bg-insight { background-color: #fffbeb; }
+.bg-recommendation { background-color: #eff6ff; }
+.bg-executive { background-color: #1e293b; }
+
+/* Bordas coloridas */
+.border-strategic { border-left-color: #0369a1; }
+.border-alert { border-left-color: #dc2626; }
+.border-insight { border-left-color: #f59e0b; }
+.border-recommendation { border-left-color: #3b82f6; }
+
+/* Status colors */
+.status-otima { background-color: #dcfce7; color: #166534; }
+.status-boa { background-color: #dbeafe; color: #1e40af; }
+.status-regular { background-color: #fef3c7; color: #92400e; }
+.status-ruim { background-color: #fee2e2; color: #991b1b; }
+
+/* Grid improvements */
+.grid-cols-auto { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+
+/* Card enhancements */
+.card-hover { transition: all 0.2s ease-in-out; }
+.card-hover:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); }
