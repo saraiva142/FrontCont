@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { analysisAPI } from '../services/api.js';
 import LoadingSpinner from './LoadingSpinner.jsx';
+import { generateAnalysisPDF } from '../services/pdfGenerator.js';
 
 const FileUpload = () => {
   const [file, setFile] = useState(null);
@@ -171,7 +172,7 @@ const FileUpload = () => {
 
       {/* Results - VERSÃO COMPLETA COM NOVAS SEÇÕES */}
       {result && (
-        <div className="card">
+        <div id="analysis-result" className="card">
           <h3 style={{ 
             fontSize: '1.25rem', 
             fontWeight: '600', 
@@ -574,7 +575,8 @@ const FileUpload = () => {
               padding: '1.5rem', 
               backgroundColor: '#1e293b', 
               color: 'white',
-              borderRadius: '0.75rem'
+              borderRadius: '0.75rem',
+              marginBottom: '1.5rem' // ← Adicione margin-bottom aqui
             }}>
               <h4 style={{ fontWeight: '600', marginBottom: '0.5rem', color: '#f8fafc' }}>
                 📋 Resumo Executivo
@@ -584,6 +586,29 @@ const FileUpload = () => {
               </p>
             </div>
           )}
+
+          {/* BOTÃO DOWNLOAD PDF - ADICIONE ESTA SEÇÃO */}
+          <div style={{ 
+            marginTop: '2rem', 
+            paddingTop: '1.5rem', 
+            borderTop: '1px solid #e5e7eb',
+            display: 'flex', 
+            gap: '1rem',
+            justifyContent: 'flex-end'
+          }}>
+            <button
+              onClick={() => generateAnalysisPDF(result, 'analysis-result')}
+              className="btn btn-secondary"
+              style={{ 
+                display: 'flex', 
+                alignItems: 'center', 
+                gap: '0.5rem',
+                padding: '0.75rem 1.5rem'
+              }}
+            >
+              📄 Baixar PDF
+            </button>
+          </div>
         </div>
       )}
     </div>

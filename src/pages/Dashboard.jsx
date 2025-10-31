@@ -3,6 +3,8 @@ import { useAuth } from '../context/AuthContext.jsx';
 import FileUpload from '../components/FileUpload.jsx';
 import AnalysisHistory from '../components/AnalysisHistory.jsx';
 import SmartInsights from '../components/SmartInsights.jsx';
+import FinancialCharts from '../components/FinancialCharts.jsx';
+import TaxReminders from '../components/TaxReminders.jsx';
 
 const Dashboard = () => {
   const { user, signOut } = useAuth();
@@ -62,6 +64,7 @@ const Dashboard = () => {
           {[
             { id: 'upload', label: '📁 Upload e Análise' },
             { id: 'history', label: '📊 Histórico' },
+            { id: 'charts', label: '📈 Gráficos' },
             { id: 'insights', label: '💡 Observações Inteligentes' }
           ].map(tab => (
             <button
@@ -86,11 +89,16 @@ const Dashboard = () => {
       </nav>
 
       {/* Tab Content */}
-      <main>
-        {activeTab === 'upload' && <FileUpload />}
-        {activeTab === 'history' && <AnalysisHistory />}
-        {activeTab === 'insights' && <SmartInsights />}
-      </main>
+      <div className="grid grid-cols-1 lg:grid-cols-3" style={{ gap: '2rem', marginTop: '2rem' }}>
+        <div className="lg:col-span-2">
+          {activeTab === 'upload' && <FileUpload />}
+          {activeTab === 'history' && <AnalysisHistory />}
+          {activeTab === 'charts' && <FinancialCharts />}
+          {activeTab === 'insights' && <SmartInsights />}
+        </div>
+        
+        
+      </div>
     </div>
   );
 };
